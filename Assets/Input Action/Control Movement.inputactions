@@ -1,0 +1,54 @@
+{
+    "name": "Control Movement",
+    "maps": [
+        {
+            "name": "fly sky",
+            "id": "4f5b989d-6fc4-4458-9bfd-47741333a3db",
+            "actions": [
+                {
+                    "name": "fly control",
+                    "type": "Button",
+                    "id": "1abca8d2-4db9-433a-8829-ecdb87c0911f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "fly with key",
+                    "type": "Value",
+                    "id": "fe8a82ee-4182-4248-ae2c-2a4b7d29b958",
+                    "expectedControlType": "Key",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "caebdef1-b6a3-4110-a4e0-2be3ce05399c",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "fly control",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "30316e63-04c2-4d7d-b04e-1ad39933e9f4",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "fly with key",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
