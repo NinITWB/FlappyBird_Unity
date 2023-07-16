@@ -7,12 +7,14 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] private float pipeSpeed;
     public static GameManager Instance;
     private bool isGameOver = false;
     private int mark = 0;
-    [SerializeField] private float pipeSpeed;
     public float timeRecover { get; set; }
     public float score { get; set; }
+
+    public bool isPauseGame { get; private set; }
 
     public bool isUpgrade { get; private set; }
 
@@ -39,12 +41,31 @@ public class GameManager : MonoBehaviour
         mark = 0;
     }
 
+    private void Start()
+    {
+        isPauseGame = false;
+    }
+
     private void Update()
     {
         UpgradeSpeedAndTime();
     }
 
-    public bool UpgradeCondition()
+    public void PauseGame()
+    {
+        if (!isPauseGame)
+        {
+            Time.timeScale = 0;
+            isPauseGame = true;
+        }
+        else
+        {
+            Time.timeScale = 1;
+            isPauseGame = false;
+        }
+    }
+
+    public bool UpgradeDifficulty()
     {
         if (this.score >= 2 && mark == 0) 
         {
@@ -64,7 +85,7 @@ public class GameManager : MonoBehaviour
 
     private void UpgradeSpeedAndTime()
     {
-        if (UpgradeCondition())
+        if (UpgradeDifficulty())
         {
             this.pipeSpeed *= 1.2f;
             this.timeRecover -= .5f;
@@ -74,7 +95,6 @@ public class GameManager : MonoBehaviour
     public void EndGame()
     {
         isGameOver = true;
-        Time.timeScale = 0;
         UiManager.Instance.UIAfterDeath();
     }
 

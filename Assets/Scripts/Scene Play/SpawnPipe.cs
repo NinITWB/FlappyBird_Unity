@@ -14,7 +14,7 @@ public class SpawnPipe : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //clone = upPipe;
+        
     }
 
     // Update is called once per frame
@@ -28,16 +28,6 @@ public class SpawnPipe : MonoBehaviour
     {
         /*if (timerSpawn >= timeSpawn)
         {
-            GameObject newPipe = Instantiate(upPipe, new Vector3(3.2f, 3, 0), Quaternion.identity);
-            //CreateParent(newPipe);
-            newPipe.transform.SetParent(oParent.transform, false);
-            oParent.GetComponent<BoxCollider2D>().offset = newPipe.transform.position;
-            timerSpawn = 0;
-        }*/
-
-
-        /*if (timerSpawn >= timeSpawn)
-        {
             GameObject go = Instantiate(clone, new Vector3(3.14f, -0.39f, 0), Quaternion.identity);
             float yPosPipeUp = Random.Range(2.67f, 5.65f);
             go.transform.GetChild(0).localPosition = new Vector3(0, yPosPipeUp, 0);
@@ -48,11 +38,11 @@ public class SpawnPipe : MonoBehaviour
             timerSpawn = 0;
         }*/
 
-        /*if (GameManager.Instance != null)
+        if (GameManager.Instance != null)
         {
             if (GameManager.Instance.IsGameOver)
                 return;
-        }*/
+        }
 
         timeSpawn = GameManager.Instance.timeRecover;
 

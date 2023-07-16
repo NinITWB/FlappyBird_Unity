@@ -16,17 +16,14 @@ public class PipeMovement : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        /*if (GameManager.Instance != null)
+        if (GameManager.Instance != null)
         {
             if (GameManager.Instance.IsGameOver)
             {
                 return;
             }
-        }*/
+        }
         Movement();
-
-        
-        
     }
 
     private void Movement()

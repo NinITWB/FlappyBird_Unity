@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.ConstrainedExecution;
+using UnityEngine.SceneManagement;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,16 +13,16 @@ public class UiManager : MonoBehaviour
     [SerializeField] private TMP_Text finalScore;
     [SerializeField] private Image medal;
     [SerializeField] private GameObject title;
+    [SerializeField] private GameObject gameOver;
+    [SerializeField] private GameObject tutorialPanel;
+    
 
     [SerializeField] private Sprite[] medals;
-
-    public bool startGame { get; private set; }
-
     private int scoreLevel;
 
     private void OnEnable()
     {
-        StartCoroutine(ShowGameTitle());
+        StartCoroutine(ShowGameStartTitle());
     }
 
     private void Start()
@@ -37,7 +36,8 @@ public class UiManager : MonoBehaviour
             Destroy(Instance);
         }
         medal.enabled = false;
-        finalScore.enabled = false;
+        finalScore.enabled = false;    
+
     }
 
     public TMP_Text TextMeshPro
@@ -50,11 +50,25 @@ public class UiManager : MonoBehaviour
     {
         finalScore.text = _textMeshPro.text;
         scoreLevel = Convert.ToInt32(finalScore.text);
+
         MedalRule(scoreLevel);
+
+        _textMeshPro.enabled = false;
+        gameOver.SetActive(true);
         endingBoard.SetActive(true);
         finalScore.enabled = true;
         medal.enabled = true;
     }
+
+    public void OffTutorialPanel()
+    {
+        tutorialPanel.SetActive(false);
+    }
+
+    public void PressPause()
+    {
+        GameManager.Instance.PauseGame();    
+    }    
 
     private void MedalRule(int finalScore)
     {
@@ -73,14 +87,19 @@ public class UiManager : MonoBehaviour
         _textMeshPro.text = GameManager.Instance.score.ToString();
     }
 
-    private IEnumerator ShowGameTitle()
+    public void ResumeGame()
     {
-        startGame = true;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    private IEnumerator ShowGameStartTitle()
+    {
         title.SetActive(true);
         _textMeshPro.enabled = false;
         yield return new WaitForSecondsRealtime(1.5f);
-        startGame = false;
         title.SetActive(false);
+        tutorialPanel.SetActive(true);
         _textMeshPro.enabled = true;
+        Time.timeScale = 0;
     }
 }

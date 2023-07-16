@@ -16,6 +16,7 @@ public class movement : MonoBehaviour
 
     private Rigidbody2D rigid;
     private bool isJump;
+    private bool isStart;
     // Start is called before the first frame update
     private void Start()
     {
@@ -26,6 +27,8 @@ public class movement : MonoBehaviour
         action = input.actions["fly control"];
         
         action.performed += Action_performed;
+        StartCoroutine(StartTime());
+        
     }
 
 
@@ -33,30 +36,18 @@ public class movement : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-
-        /*if (GameManager.Instance != null )
+        if (!isStart)
         {
-            if (GameManager.Instance.IsGameOver)
+            if (GameManager.Instance != null)
             {
-                return;
+                if (GameManager.Instance.IsGameOver)
+                {
+                    return;
+                }
             }
-        } */
-
-        if (UiManager.Instance.startGame)
-        {
-            gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
-            return;
+            RotateBack();
         }
-        else
-        {
-            gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
-        }
-
-
-        RotateBack();
-
-        
-
+       
     }
 
     
@@ -66,18 +57,34 @@ public class movement : MonoBehaviour
         isJump = true;
     }
 
+    private IEnumerator StartTime()
+    {
+        isStart = true;
+        gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+        yield return new WaitForSecondsRealtime(1.5f);
+        gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+        isStart = false;
+    }
+
     private void FixedUpdate()
     {
-        /*if (GameManager.Instance.IsGameOver)
-        { 
-            return;
-        }*/
-        
-        if (isJump)
+        if (!isStart)
         {
-            jump();
-            isJump = false;
+            if (GameManager.Instance != null)
+            {
+                if (GameManager.Instance.IsGameOver)
+                {
+                    return;
+                }
+            }
+
+            if (isJump)
+            {
+                jump();
+                isJump = false;
+            }
         }
+        
             
     }
 
