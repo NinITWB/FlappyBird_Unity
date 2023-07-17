@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     private bool isGameOver = false;
     private int mark = 0;
     public float timeRecover { get; set; }
-    public float score { get; set; }
+    public int score { get; set; }
 
     public bool isPauseGame { get; private set; }
 
@@ -67,7 +67,7 @@ public class GameManager : MonoBehaviour
 
     public bool UpgradeDifficulty()
     {
-        if (this.score >= 2 && mark == 0) 
+        if (this.score >= 10 && mark == 0) 
         {
             mark++;
             return true;

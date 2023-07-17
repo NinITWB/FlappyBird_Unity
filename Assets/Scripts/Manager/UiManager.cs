@@ -15,6 +15,7 @@ public class UiManager : MonoBehaviour
     [SerializeField] private GameObject title;
     [SerializeField] private GameObject gameOver;
     [SerializeField] private GameObject tutorialPanel;
+    [SerializeField] private TextMeshProUGUI bestScore;
     
 
     [SerializeField] private Sprite[] medals;
@@ -36,7 +37,7 @@ public class UiManager : MonoBehaviour
             Destroy(Instance);
         }
         medal.enabled = false;
-        finalScore.enabled = false;    
+        //finalScore.enabled = false;    
 
     }
 
@@ -48,16 +49,30 @@ public class UiManager : MonoBehaviour
 
     public void UIAfterDeath()
     {
-        finalScore.text = _textMeshPro.text;
-        scoreLevel = Convert.ToInt32(finalScore.text);
-
+        scoreLevel = Convert.ToInt32(_textMeshPro.text);
         MedalRule(scoreLevel);
-
         _textMeshPro.enabled = false;
         gameOver.SetActive(true);
         endingBoard.SetActive(true);
-        finalScore.enabled = true;
+        StartCoroutine(CountScore(scoreLevel, 1.8f));
+        DataManager.instance.UpdateBestScore(bestScore);
         medal.enabled = true;
+    }
+
+    private IEnumerator CountScore(int score, float duration)
+    {
+        finalScore.text = 0.ToString();
+       
+
+        if (score != 0)
+        {
+            float yieldTime = duration / score;
+            for (int i = 1; i <= score; i++)
+            {
+                finalScore.text = i.ToString();
+                yield return new WaitForSeconds(yieldTime);
+            }
+        }
     }
 
     public void OffTutorialPanel()
@@ -72,14 +87,15 @@ public class UiManager : MonoBehaviour
 
     private void MedalRule(int finalScore)
     {
+        
         if (scoreLevel >= 0 && scoreLevel <= 7)
         {
-            medal.sprite = medals[0];
+            medal.sprite = medals[0];       //Set Bronze medal
         }
         else if (scoreLevel <= 20)
-            medal.sprite = medals[1];
+            medal.sprite = medals[1];       //Set Silver medal
         else
-            medal.sprite = medals[2];
+            medal.sprite = medals[2];       //Set Gold medal
     }
 
     public void ShowScore()

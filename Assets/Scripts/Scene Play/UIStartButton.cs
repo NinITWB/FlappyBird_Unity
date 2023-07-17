@@ -9,6 +9,5 @@ public class UIStartButton : MonoBehaviour
     {
         Time.timeScale = 1;
         UiManager.Instance.OffTutorialPanel();
-        Debug.Log("Click");
     }
 }
